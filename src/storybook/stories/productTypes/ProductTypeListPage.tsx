@@ -1,11 +1,18 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
+import {
+  ProductTypeConfigurable,
+  ProductTypeEnum
+} from "@saleor/types/globalTypes";
 import {
   listActionsProps,
   pageListProps,
   searchPageProps,
-  tabPageProps
+  tabPageProps,
+  sortPageProps,
+  filterPageProps
 } from "../../../fixtures";
 import ProductTypeListPage, {
   ProductTypeListPageProps
@@ -17,6 +24,22 @@ const props: ProductTypeListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   ...searchPageProps,
+  ...sortPageProps,
+  ...filterPageProps,
+  filterOpts: {
+    configurable: {
+      active: false,
+      value: ProductTypeConfigurable.CONFIGURABLE
+    },
+    type: {
+      active: false,
+      value: ProductTypeEnum.SHIPPABLE
+    }
+  },
+  sort: {
+    ...sortPageProps.sort,
+    sort: ProductTypeListUrlSortField.name
+  },
   ...tabPageProps,
   onBack: () => undefined,
   productTypes

@@ -1,10 +1,14 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { StaffListUrlSortField } from "@saleor/staff/urls";
+import { StaffMemberStatus } from "@saleor/types/globalTypes";
 import {
   pageListProps,
   searchPageProps,
-  tabPageProps
+  tabPageProps,
+  sortPageProps,
+  filterPageProps
 } from "../../../fixtures";
 import StaffListPage, {
   StaffListPageProps
@@ -15,9 +19,21 @@ import Decorator from "../../Decorator";
 const props: StaffListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
+  ...sortPageProps,
   ...tabPageProps,
+  ...filterPageProps,
+  filterOpts: {
+    status: {
+      active: false,
+      value: StaffMemberStatus.ACTIVE
+    }
+  },
   onAdd: undefined,
   onBack: () => undefined,
+  sort: {
+    ...sortPageProps.sort,
+    sort: StaffListUrlSortField.name
+  },
   staffMembers
 };
 

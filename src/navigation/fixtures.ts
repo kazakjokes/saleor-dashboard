@@ -6,9 +6,9 @@ export const menuList: MenuList_menus_edges_node[] = [
     __typename: "Menu",
     id: "TWVudTox",
     items: [
-      { id: "TWVudUl0ZW06MQ==", __typename: "MenuItem" },
-      { id: "TWVudUl0ZW06Mg==", __typename: "MenuItem" },
-      { id: "TWVudUl0ZW06Mw==", __typename: "MenuItem" }
+      { __typename: "MenuItem", id: "TWVudUl0ZW06MQ==" },
+      { __typename: "MenuItem", id: "TWVudUl0ZW06Mg==" },
+      { __typename: "MenuItem", id: "TWVudUl0ZW06Mw==" }
     ],
     name: "navbar"
   },
@@ -16,8 +16,8 @@ export const menuList: MenuList_menus_edges_node[] = [
     __typename: "Menu",
     id: "TWVudToy",
     items: [
-      { id: "TWVudUl0ZW06NA==", __typename: "MenuItem" },
-      { id: "TWVudUl0ZW06Nw==", __typename: "MenuItem" }
+      { __typename: "MenuItem", id: "TWVudUl0ZW06NA==" },
+      { __typename: "MenuItem", id: "TWVudUl0ZW06Nw==" }
     ],
     name: "footer"
   }
@@ -48,7 +48,6 @@ export const menu: MenuDetails_menu = {
           level: 0,
           name: "Jewelry",
           page: null,
-          sortOrder: 0,
           url: null
         },
         {
@@ -64,7 +63,6 @@ export const menu: MenuDetails_menu = {
           level: 0,
           name: "Glasses",
           page: null,
-          sortOrder: 1,
           url: null
         }
       ],
@@ -73,7 +71,6 @@ export const menu: MenuDetails_menu = {
       level: 0,
       name: "Accessories",
       page: null,
-      sortOrder: 0,
       url: null
     },
     {
@@ -89,7 +86,6 @@ export const menu: MenuDetails_menu = {
       level: 0,
       name: "Groceries",
       page: null,
-      sortOrder: 1,
       url: null
     },
     {
@@ -105,7 +101,6 @@ export const menu: MenuDetails_menu = {
       level: 0,
       name: "Apparel",
       page: null,
-      sortOrder: 2,
       url: null
     }
   ],

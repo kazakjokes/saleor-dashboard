@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { VoucherFilterInput, DiscountValueTypeEnum } from "./../../types/globalTypes";
+import { VoucherFilterInput, VoucherSortingInput, DiscountValueTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: VoucherList
@@ -14,7 +14,7 @@ export interface VoucherList_vouchers_edges_node_countries {
   country: string;
 }
 
-export interface VoucherList_vouchers_edges_node_minAmountSpent {
+export interface VoucherList_vouchers_edges_node_minSpent {
   __typename: "Money";
   currency: string;
   amount: number;
@@ -30,7 +30,7 @@ export interface VoucherList_vouchers_edges_node {
   discountValueType: DiscountValueTypeEnum;
   discountValue: number;
   countries: (VoucherList_vouchers_edges_node_countries | null)[] | null;
-  minAmountSpent: VoucherList_vouchers_edges_node_minAmountSpent | null;
+  minSpent: VoucherList_vouchers_edges_node_minSpent | null;
   minCheckoutItemsQuantity: number | null;
 }
 
@@ -63,4 +63,5 @@ export interface VoucherListVariables {
   first?: number | null;
   last?: number | null;
   filter?: VoucherFilterInput | null;
+  sort?: VoucherSortingInput | null;
 }

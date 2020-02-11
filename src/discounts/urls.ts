@@ -7,7 +7,9 @@ import {
   Dialog,
   Filters,
   Pagination,
-  TabActionDialog
+  TabActionDialog,
+  Sort,
+  FiltersWithMultipleValues
 } from "../types";
 import { SaleDetailsPageTab } from "./components/SaleDetailsPage";
 import { VoucherDetailsPageTab } from "./components/VoucherDetailsPage";
@@ -17,15 +19,31 @@ export const discountSection = "/discounts/";
 export const saleSection = urlJoin(discountSection, "sales");
 export const saleListPath = saleSection;
 export enum SaleListUrlFiltersEnum {
+  type = "type",
+  startedFrom = "startedFrom",
+  startedTo = "startedTo",
   query = "query"
 }
-export type SaleListUrlFilters = Filters<SaleListUrlFiltersEnum>;
+export enum SaleListUrlFiltersWithMultipleValues {
+  status = "status"
+}
+export type SaleListUrlFilters = Filters<SaleListUrlFiltersEnum> &
+  FiltersWithMultipleValues<SaleListUrlFiltersWithMultipleValues>;
 export type SaleListUrlDialog = "remove" | TabActionDialog;
+export enum SaleListUrlSortField {
+  name = "name",
+  endDate = "end-date",
+  startDate = "start-date",
+  type = "type",
+  value = "value"
+}
+export type SaleListUrlSort = Sort<SaleListUrlSortField>;
 export type SaleListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<SaleListUrlDialog> &
   Pagination &
-  SaleListUrlFilters;
+  SaleListUrlFilters &
+  SaleListUrlSort;
 export const saleListUrl = (params?: SaleListUrlQueryParams) =>
   saleListPath + "?" + stringifyQs(params);
 export const salePath = (id: string) => urlJoin(saleSection, id);
@@ -49,15 +67,35 @@ export const saleAddUrl = saleAddPath;
 export const voucherSection = urlJoin(discountSection, "vouchers");
 export const voucherListPath = voucherSection;
 export enum VoucherListUrlFiltersEnum {
+  startedFrom = "startedFrom",
+  startedTo = "startedTo",
+  timesUsedFrom = "timesUsedFrom",
+  timesUsedTo = "timesUsedTo",
   query = "query"
 }
-export type VoucherListUrlFilters = Filters<VoucherListUrlFiltersEnum>;
+export enum VoucherListUrlFiltersWithMultipleValues {
+  status = "status",
+  type = "type"
+}
+export type VoucherListUrlFilters = Filters<VoucherListUrlFiltersEnum> &
+  FiltersWithMultipleValues<VoucherListUrlFiltersWithMultipleValues>;
 export type VoucherListUrlDialog = "remove" | TabActionDialog;
+export enum VoucherListUrlSortField {
+  code = "code",
+  endDate = "end-date",
+  limit = "limit",
+  minSpent = "min-spent",
+  startDate = "start-date",
+  type = "type",
+  value = "value"
+}
+export type VoucherListUrlSort = Sort<VoucherListUrlSortField>;
 export type VoucherListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<VoucherListUrlDialog> &
   Pagination &
-  VoucherListUrlFilters;
+  VoucherListUrlFilters &
+  VoucherListUrlSort;
 export const voucherListUrl = (params?: VoucherListUrlQueryParams) =>
   voucherListPath + "?" + stringifyQs(params);
 export const voucherPath = (id: string) => urlJoin(voucherSection, id);

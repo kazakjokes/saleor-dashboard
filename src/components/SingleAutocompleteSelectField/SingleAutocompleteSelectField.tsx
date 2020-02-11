@@ -4,21 +4,24 @@ import TextField from "@material-ui/core/TextField";
 import Downshift from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
-import SingleAutocompleteSelectFieldContent, {
-  SingleAutocompleteChoiceType
-} from "./SingleAutocompleteSelectFieldContent";
 
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { FetchMoreProps } from "@saleor/types";
 import ArrowDropdownIcon from "../../icons/ArrowDropdown";
 import Debounce, { DebounceProps } from "../Debounce";
+import SingleAutocompleteSelectFieldContent, {
+  SingleAutocompleteChoiceType
+} from "./SingleAutocompleteSelectFieldContent";
 
-const useStyles = makeStyles({
-  container: {
-    flexGrow: 1,
-    position: "relative"
-  }
-});
+const useStyles = makeStyles(
+  {
+    container: {
+      flexGrow: 1,
+      position: "relative"
+    }
+  },
+  { name: "SingleAutocompleteSelectField" }
+);
 
 export interface SingleAutocompleteSelectFieldProps
   extends Partial<FetchMoreProps> {
@@ -38,17 +41,14 @@ export interface SingleAutocompleteSelectFieldProps
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const DebounceAutocomplete: React.ComponentType<
-  DebounceProps<string>
-> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<
+  string
+>> = Debounce;
 
-const SingleAutocompleteSelectFieldComponent: React.FC<
-  SingleAutocompleteSelectFieldProps
-> = props => {
+const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectFieldProps> = props => {
   const {
-    choices,
-
     allowCustomValues,
+    choices,
     disabled,
     displayValue,
     emptyOption,
@@ -166,9 +166,11 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
   );
 };
 
-const SingleAutocompleteSelectField: React.FC<
-  SingleAutocompleteSelectFieldProps
-> = ({ choices, fetchChoices, ...rest }) => {
+const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps> = ({
+  choices,
+  fetchChoices,
+  ...rest
+}) => {
   const [query, setQuery] = React.useState("");
   if (fetchChoices) {
     return (

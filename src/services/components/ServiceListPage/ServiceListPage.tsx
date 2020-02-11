@@ -6,15 +6,27 @@ import { FormattedMessage, useIntl } from "react-intl";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import SearchBar from "@saleor/components/SearchBar";
+import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
-import { PageListProps, SearchPageProps, TabPageProps } from "@saleor/types";
+import {
+  PageListProps,
+  TabPageProps,
+  SortPage,
+  FilterPageProps
+} from "@saleor/types";
+import { ServiceListUrlSortField } from "@saleor/services/urls";
 import { ServiceList_serviceAccounts_edges_node } from "../../types/ServiceList";
 import ServiceList from "../ServiceList";
+import {
+  ServiceFilterKeys,
+  ServiceListFilterOpts,
+  createFilterStructure
+} from "./filters";
 
 export interface ServiceListPageProps
   extends PageListProps,
-    SearchPageProps,
+    FilterPageProps<ServiceFilterKeys, ServiceListFilterOpts>,
+    SortPage<ServiceListUrlSortField>,
     TabPageProps {
   services: ServiceList_serviceAccounts_edges_node[];
   onBack: () => void;
@@ -22,11 +34,14 @@ export interface ServiceListPageProps
 }
 
 const ServiceListPage: React.FC<ServiceListPageProps> = ({
+  currencySymbol,
   currentTab,
+  filterOpts,
   initialSearch,
   onAdd,
   onAll,
   onBack,
+  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -35,6 +50,8 @@ const ServiceListPage: React.FC<ServiceListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+
+  const structure = createFilterStructure(intl, filterOpts);
 
   return (
     <Container>
@@ -50,11 +67,13 @@ const ServiceListPage: React.FC<ServiceListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <SearchBar
+        <FilterBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Service Accounts",
             description: "tab name"
           })}
+          currencySymbol={currencySymbol}
+          filterStructure={structure}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
@@ -62,6 +81,7 @@ const ServiceListPage: React.FC<ServiceListPageProps> = ({
           })}
           tabs={tabs}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}

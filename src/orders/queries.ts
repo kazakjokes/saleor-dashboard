@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
+import makeQuery from "@saleor/hooks/makeQuery";
 import { TypedQuery } from "../queries";
 import { OrderDetails, OrderDetailsVariables } from "./types/OrderDetails";
 import {
@@ -169,6 +170,7 @@ export const orderListQuery = gql`
     $last: Int
     $before: String
     $filter: OrderFilterInput
+    $sort: OrderSortingInput
   ) {
     orders(
       before: $before
@@ -176,6 +178,7 @@ export const orderListQuery = gql`
       first: $first
       last: $last
       filter: $filter
+      sortBy: $sort
     ) {
       edges {
         node {
@@ -208,7 +211,7 @@ export const orderListQuery = gql`
     }
   }
 `;
-export const TypedOrderListQuery = TypedQuery<OrderList, OrderListVariables>(
+export const useOrderListQuery = makeQuery<OrderList, OrderListVariables>(
   orderListQuery
 );
 
@@ -220,6 +223,7 @@ export const orderDraftListQuery = gql`
     $last: Int
     $before: String
     $filter: OrderDraftFilterInput
+    $sort: OrderSortingInput
   ) {
     draftOrders(
       before: $before
@@ -227,6 +231,7 @@ export const orderDraftListQuery = gql`
       first: $first
       last: $last
       filter: $filter
+      sortBy: $sort
     ) {
       edges {
         node {
@@ -259,7 +264,7 @@ export const orderDraftListQuery = gql`
     }
   }
 `;
-export const TypedOrderDraftListQuery = TypedQuery<
+export const useOrderDraftListQuery = makeQuery<
   OrderDraftList,
   OrderDraftListVariables
 >(orderDraftListQuery);
@@ -286,7 +291,7 @@ export const TypedOrderDetailsQuery = TypedQuery<
 
 export const searchOrderVariant = gql`
   query SearchOrderVariant($first: Int!, $query: String!, $after: String) {
-    search: products(query: $query, first: $first, after: $after) {
+    search: products(first: $first, after: $after, filter: { search: $query }) {
       edges {
         node {
           id
@@ -298,9 +303,13 @@ export const searchOrderVariant = gql`
             id
             name
             sku
-            price {
-              amount
-              currency
+            pricing {
+              priceUndiscounted {
+                net {
+                  amount
+                  currency
+                }
+              }
             }
           }
         }

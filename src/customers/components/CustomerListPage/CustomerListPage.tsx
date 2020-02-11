@@ -5,32 +5,41 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
 import {
   ListActions,
   PageListProps,
-  SearchPageProps,
-  TabPageProps
+  TabPageProps,
+  SortPage,
+  FilterPageProps
 } from "@saleor/types";
-import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
+import { CustomerListUrlSortField } from "@saleor/customers/urls";
+import FilterBar from "@saleor/components/FilterBar";
 import CustomerList from "../CustomerList/CustomerList";
+import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
+import {
+  CustomerFilterKeys,
+  CustomerListFilterOpts,
+  createFilterStructure
+} from "./filters";
 
 export interface CustomerListPageProps
   extends PageListProps,
     ListActions,
-    SearchPageProps,
+    FilterPageProps<CustomerFilterKeys, CustomerListFilterOpts>,
+    SortPage<CustomerListUrlSortField>,
     TabPageProps {
   customers: ListCustomers_customers_edges_node[];
 }
 
 const CustomerListPage: React.FC<CustomerListPageProps> = ({
+  currencySymbol,
   currentTab,
-  customers,
-  disabled,
+  filterOpts,
   initialSearch,
   onAdd,
   onAll,
+  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
@@ -40,15 +49,12 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
 }) => {
   const intl = useIntl();
 
+  const structure = createFilterStructure(intl, filterOpts);
+
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.customers)}>
-        <Button
-          color="primary"
-          variant="contained"
-          disabled={disabled}
-          onClick={onAdd}
-        >
+        <Button color="primary" variant="contained" onClick={onAdd}>
           <FormattedMessage
             defaultMessage="Create customer"
             description="button"
@@ -56,28 +62,27 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
         </Button>
       </PageHeader>
       <Card>
-        <SearchBar
+        <FilterBar
           allTabLabel={intl.formatMessage({
             defaultMessage: "All Customers",
             description: "tab name"
           })}
+          currencySymbol={currencySymbol}
           currentTab={currentTab}
+          filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
             defaultMessage: "Search Customer"
           })}
           tabs={tabs}
           onAll={onAll}
+          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <CustomerList
-          customers={customers}
-          disabled={disabled}
-          {...customerListProps}
-        />
+        <CustomerList {...customerListProps} />
       </Card>
     </Container>
   );

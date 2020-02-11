@@ -15,28 +15,31 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { CategoryDetails_category_backgroundImage } from "../../types/CategoryDetails";
 import { FormData } from "../CategoryUpdatePage";
 
-const useStyles = makeStyles(theme => ({
-  fileField: {
-    display: "none"
-  },
-  image: {
-    height: "100%",
-    objectFit: "contain",
-    userSelect: "none",
-    width: "100%"
-  },
-  imageContainer: {
-    background: "#ffffff",
-    border: "1px solid #eaeaea",
-    borderRadius: theme.spacing(),
-    height: 148,
-    justifySelf: "start",
-    overflow: "hidden",
-    padding: theme.spacing(2),
-    position: "relative",
-    width: 148
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    fileField: {
+      display: "none"
+    },
+    image: {
+      height: "100%",
+      objectFit: "contain",
+      userSelect: "none",
+      width: "100%"
+    },
+    imageContainer: {
+      background: "#ffffff",
+      border: "1px solid #eaeaea",
+      borderRadius: theme.spacing(),
+      height: 148,
+      justifySelf: "start",
+      overflow: "hidden",
+      padding: theme.spacing(2),
+      position: "relative",
+      width: 148
+    }
+  }),
+  { name: "CategoryBackground" }
+);
 
 export interface CategoryBackgroundProps {
   data: FormData;
@@ -77,6 +80,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
               onChange={event => onImageUpload(event.target.files[0])}
               type="file"
               ref={anchor}
+              accept="image/*"
             />
           </>
         }
@@ -90,7 +94,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
           </div>
         </CardContent>
       ) : image === null ? (
-        <ImageUpload onImageUpload={onImageUpload} />
+        <ImageUpload onImageUpload={files => onImageUpload(files[0])} />
       ) : (
         <CardContent>
           <ImageTile image={image} onImageDelete={onImageDelete} />

@@ -9,15 +9,16 @@ import {
   FiltersWithMultipleValues,
   Pagination,
   SingleAction,
-  TabActionDialog
+  TabActionDialog,
+  Sort
 } from "../types";
 
 const orderSectionUrl = "/orders";
 
 export const orderListPath = orderSectionUrl;
 export enum OrderListUrlFiltersEnum {
-  dateFrom = "dateFrom",
-  dateTo = "dateTo",
+  createdFrom = "createdFrom",
+  createdTo = "createdTo",
   email = "email",
   payment = "payment",
   query = "query"
@@ -28,9 +29,19 @@ export enum OrderListUrlFiltersWithMultipleValuesEnum {
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
   FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValuesEnum>;
 export type OrderListUrlDialog = "cancel" | TabActionDialog;
+export enum OrderListUrlSortField {
+  number = "number",
+  customer = "customer",
+  date = "date",
+  fulfillment = "status",
+  payment = "payment",
+  total = "total"
+}
+export type OrderListUrlSort = Sort<OrderListUrlSortField>;
 export type OrderListUrlQueryParams = BulkAction &
   Dialog<OrderListUrlDialog> &
   OrderListUrlFilters &
+  OrderListUrlSort &
   Pagination &
   ActiveTab;
 export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
@@ -44,14 +55,25 @@ export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
 
 export const orderDraftListPath = urlJoin(orderSectionUrl, "drafts");
 export enum OrderDraftListUrlFiltersEnum {
+  createdFrom = "createdFrom",
+  createdTo = "createdTo",
+  customer = "customer",
   query = "query"
 }
 export type OrderDraftListUrlFilters = Filters<OrderDraftListUrlFiltersEnum>;
 export type OrderDraftListUrlDialog = "remove" | TabActionDialog;
+export enum OrderDraftListUrlSortField {
+  number = "number",
+  customer = "customer",
+  date = "date",
+  total = "total"
+}
+export type OrderDraftListUrlSort = Sort<OrderDraftListUrlSortField>;
 export type OrderDraftListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<OrderDraftListUrlDialog> &
   OrderDraftListUrlFilters &
+  OrderDraftListUrlSort &
   Pagination;
 export const orderDraftListUrl = (
   params?: OrderDraftListUrlQueryParams

@@ -8,18 +8,22 @@ import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { InputProps } from "@material-ui/core/Input";
 
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    "& label": {
-      top: "-3px"
+const useStyles = makeStyles(
+  theme => ({
+    formControl: {
+      "& label": {
+        top: "-3px"
+      },
+      width: "100%"
     },
-    width: "100%"
-  },
-  noLabel: {
-    padding: theme.spacing(2, 1.5)
-  }
-}));
+    noLabel: {
+      padding: theme.spacing(2, 1.5)
+    }
+  }),
+  { name: "SingleSelectField" }
+);
 
 interface SingleSelectFieldProps {
   choices: Array<{
@@ -35,13 +39,13 @@ interface SingleSelectFieldProps {
   selectProps?: SelectProps;
   placeholder?: string;
   value?: string;
+  InputProps?: InputProps;
   onChange(event: any);
 }
 
 export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
   const {
     className,
-
     disabled,
     error,
     label,
@@ -51,7 +55,8 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
     name,
     hint,
     selectProps,
-    placeholder
+    placeholder,
+    InputProps
   } = props;
   const classes = useStyles(props);
 
@@ -87,6 +92,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
             }}
             name={name}
             labelWidth={180}
+            {...InputProps}
           />
         }
         {...selectProps}

@@ -9,6 +9,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { sectionNames } from "@saleor/intl";
 import { UserError } from "../../../types";
 import {
   DiscountValueTypeEnum,
@@ -21,7 +22,6 @@ import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
 import VoucherTypes from "../VoucherTypes";
 
-import { sectionNames } from "@saleor/intl";
 import VoucherValue from "../VoucherValue";
 export interface FormData {
   applyOncePerCustomer: boolean;
@@ -32,8 +32,8 @@ export interface FormData {
   endTime: string;
   hasEndDate: boolean;
   hasUsageLimit: boolean;
-  minAmountSpent: string;
   minCheckoutItemsQuantity: string;
+  minSpent: string;
   requirementsPicker: RequirementsPicker;
   startDate: string;
   startTime: string;
@@ -70,8 +70,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     endTime: "",
     hasEndDate: false,
     hasUsageLimit: false,
-    minAmountSpent: "0",
     minCheckoutItemsQuantity: "0",
+    minSpent: "0",
     requirementsPicker: RequirementsPicker.NONE,
     startDate: "",
     startTime: "",

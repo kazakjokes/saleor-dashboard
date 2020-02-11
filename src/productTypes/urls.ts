@@ -8,22 +8,31 @@ import {
   Filters,
   Pagination,
   SingleAction,
-  TabActionDialog
+  TabActionDialog,
+  Sort
 } from "../types";
 
 const productTypeSection = "/product-types/";
 
 export const productTypeListPath = productTypeSection;
 export enum ProductTypeListUrlFiltersEnum {
+  configurable = "configurable",
+  type = "type",
   query = "query"
 }
 export type ProductTypeListUrlFilters = Filters<ProductTypeListUrlFiltersEnum>;
 export type ProductTypeListUrlDialog = "remove" | TabActionDialog;
+export enum ProductTypeListUrlSortField {
+  name = "name",
+  digital = "digital"
+}
+export type ProductTypeListUrlSort = Sort<ProductTypeListUrlSortField>;
 export type ProductTypeListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<ProductTypeListUrlDialog> &
   Pagination &
-  ProductTypeListUrlFilters;
+  ProductTypeListUrlFilters &
+  ProductTypeListUrlSort;
 export const productTypeListUrl = (params?: ProductTypeListUrlQueryParams) =>
   productTypeListPath + "?" + stringifyQs(params);
 

@@ -7,21 +7,29 @@ import {
   Filters,
   Pagination,
   SingleAction,
-  TabActionDialog
+  TabActionDialog,
+  Sort
 } from "../types";
 
 export const serviceSection = "/services/";
 
 export const serviceListPath = serviceSection;
 export enum ServiceListUrlFiltersEnum {
+  active = "active",
   query = "query"
 }
 export type ServiceListUrlFilters = Filters<ServiceListUrlFiltersEnum>;
 export type ServiceListUrlDialog = "remove" | TabActionDialog;
+export enum ServiceListUrlSortField {
+  name = "name",
+  active = "active"
+}
+export type ServiceListUrlSort = Sort<ServiceListUrlSortField>;
 export type ServiceListUrlQueryParams = ActiveTab &
-  ServiceListUrlFilters &
   Dialog<ServiceListUrlDialog> &
   Pagination &
+  ServiceListUrlFilters &
+  ServiceListUrlSort &
   SingleAction;
 export const serviceListUrl = (params?: ServiceListUrlQueryParams) =>
   serviceListPath + "?" + stringifyQs(params);
